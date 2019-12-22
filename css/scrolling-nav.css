@@ -10,3 +10,14 @@ header {
 section {
   padding: 150px 0;
 }
+.circle {
+  stroke: #fff;
+}
+
+.bubble {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: rgba(255, 255, 255, .5);
+}
