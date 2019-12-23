@@ -1,115 +1,358 @@
-function myFunction(){
+cathegorie1 = {
+    "children": [{"Name":"ÖL","Count":4319},
+        {"Name":"Tea","Count":4159},
+        {"Name":"Mashed Potatoes","Count":2583},
+        {"Name":"Boiled Potatoes","Count":2074},
+        {"Name":"Milk","Count":1894}]
+};
+cathegorie2 = {
+    "children": [{"Name":"WASSER","Count":4319},
+        {"Name":"Tea","Count":4159},
+        {"Name":"Mashed Potatoes","Count":2583},
+        {"Name":"Boiled Potatoes","Count":2074},
+        {"Name":"Milk","Count":1894}]
+};
+cathegorie3 = {
+    "children": [{"Name":"GEMUSE","Count":4319},
+        {"Name":"Tea","Count":4159},
+        {"Name":"Mashed Potatoes","Count":2583},
+        {"Name":"Boiled Potatoes","Count":2074},
+        {"Name":"Milk","Count":1894}]
+};
+cathegorie4 = {
+    "children": [{"Name":"OBST","Count":4319},
+        {"Name":"Tea","Count":4159},
+        {"Name":"Mashed Potatoes","Count":2583},
+        {"Name":"Boiled Potatoes","Count":2074},
+        {"Name":"Milk","Count":1894}]
+};
 
-    var margin = {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-    },
-    width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-    
-    var n = 6,
-        m = 1,
-        padding = 6,
-        radius = d3.scale.sqrt().range([0, 12]),
-        color = d3.scale.category10().domain(d3.range(m)),
-        x = d3.scale.ordinal().domain(d3.range(m)).rangePoints([0, width], 1);
-    
-    var nodes = d3.range(n).map(function () {
-        var i = Math.floor(Math.random() * m), //color
-            v = (i + 1) / m * -Math.log(Math.random()); //value
-        return {
-            radius: radius(v),
-            color: color(i),
-            cx: x(i),
-            cy: height / 2,
-        };
-    
+var diameter = 300;
+var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var bubble = d3.pack(cathegorie1)
+    .size([diameter, diameter])
+    .padding(1.5);
+//B1
+var svg = d3.select("#bubble1")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
+
+var nodes = d3.hierarchy(cathegorie1)
+    .sum(function(d) { return d.Count; });
+
+var node = svg.selectAll(".node")
+    .data(bubble(nodes).descendants())
+    .enter()
+    .filter(function(d){
+        return  !d.children
+    })
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
     });
-    
-    var force = d3.layout.force()
-        .nodes(nodes)
-        .size([width, height])
-        .gravity(0)
-        .charge(0)
-        .on("tick", tick)
-        .start();
-    
-    var svg = d3.select("#chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-    var circle = svg.selectAll("circle")
-        .data(nodes)
-        .enter().append("circle")
-        .attr("r", function (d) {
-        return d.radius;
+
+node.append("title")
+    .text(function(d) {
+        return d.Name + ": " + d.Count;
+    });
+
+node.append("circle")
+    .attr("r", function(d) {
+        return d.r;
     })
-        .style("fill", function (d) {
-        return d.color;
+    .style("fill", function(d,i) {
+        return color(i);
+    });
+
+node.append("text")
+    .attr("dy", ".2em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Name.substring(0, d.r / 3);
     })
-        .call(force.drag);
-    
-    function tick(e) {
-        circle.each(gravity(.2 * e.alpha))
-            .each(collide(.5))
-            .attr("cx", function (d) {
-            return d.x;
-        })
-            .attr("cy", function (d) {
-            return d.y;
-        });
-    }
-    
-    // Move nodes toward cluster focus.
-    function gravity(alpha) {
-        return function (d) {
-            d.y += (d.cy - d.y) * alpha;
-            d.x += (d.cx - d.x) * alpha;
-        };
-    }
-    
-    // Resolve collisions between nodes.
-    function collide(alpha) {
-        var quadtree = d3.geom.quadtree(nodes);
-        return function (d) {
-            var r = d.radius + radius.domain()[1] + padding,
-                nx1 = d.x - r,
-                nx2 = d.x + r,
-                ny1 = d.y - r,
-                ny2 = d.y + r;
-            quadtree.visit(function (quad, x1, y1, x2, y2) {
-                if (quad.point && (quad.point !== d)) {
-                    var x = d.x - quad.point.x,
-                        y = d.y - quad.point.y,
-                        l = Math.sqrt(x * x + y * y),
-                        r = d.radius + quad.point.radius + (d.color !== quad.point.color) * padding;
-                    if (l < r) {
-                        l = (l - r) / l * alpha;
-                        d.x -= x *= l;
-                        d.y -= y *= l;
-                        quad.point.x += x;
-                        quad.point.y += y;
-                    }
-                }
-                return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    .attr("font-family", "sans-serif")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+node.append("text")
+    .attr("dy", "1.3em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Count;
+    })
+    .attr("font-family",  "Gill Sans", "Gill Sans MT")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+d3.select(self.frameElement)
+    .style("height", diameter + "px");
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var bubble = d3.pack(cathegorie1)
+            .size([diameter, diameter])
+            .padding(1.5);
+
+var node = svg.selectAll(".node")
+            .data(bubble(nodes).descendants())
+            .enter()
+            .filter(function(d){
+                return  !d.children
+            })
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
             });
-        };
-    }
+//B2
+var diameter = 300;
+var color = d3.scaleOrdinal(d3.schemeCategory20);
+var bubble = d3.pack(cathegorie2)
 
-}
+    .size([diameter, diameter])
+    .padding(1.5);
+var svg = d3.select("#bubble2")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
 
-// type this as you would in css: #id, .class, element
-var insideNode = "#bubbleContainer";  
+var nodes = d3.hierarchy(cathegorie2)
+    .sum(function(d) { return d.Count; });
 
-// the total amount of bubbles
-var totalBubbles = 15;
+var node = svg.selectAll(".node")
+    .data(bubble(nodes).descendants())
+    .enter()
+    .filter(function(d){
+        return  !d.children
+    })
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+    });
 
-// maximum time to move the bubbles
-var maxTimeToMove = 1500;
+node.append("title")
+    .text(function(d) {
+        return d.Name + ": " + d.Count;
+    });
 
-// minimum time to move the bubbles
-var minTimeToMove = 500;
+node.append("circle")
+    .attr("r", function(d) {
+        return d.r;
+    })
+    .style("fill", function(d,i) {
+        return color(i);
+    });
+
+node.append("text")
+    .attr("dy", ".2em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Name.substring(0, d.r / 3);
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+node.append("text")
+    .attr("dy", "1.3em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Count;
+    })
+    .attr("font-family",  "Gill Sans", "Gill Sans MT")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+d3.select(self.frameElement)
+    .style("height", diameter + "px");
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var bubble = d3.pack(cathegorie2)
+            .size([diameter, diameter])
+            .padding(1.5);
+
+var node = svg.selectAll(".node")
+            .data(bubble(nodes).descendants())
+            .enter()
+            .filter(function(d){
+                return  !d.children
+            })
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+//B3
+var svg = d3.select("#bubble3")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
+
+var nodes = d3.hierarchy(cathegorie3)
+    .sum(function(d) { return d.Count; });
+
+var node = svg.selectAll(".node")
+    .data(bubble(nodes).descendants())
+    .enter()
+    .filter(function(d){
+        return  !d.children
+    })
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+    });
+
+node.append("title")
+    .text(function(d) {
+        return d.Name + ": " + d.Count;
+    });
+
+node.append("circle")
+    .attr("r", function(d) {
+        return d.r;
+    })
+    .style("fill", function(d,i) {
+        return color(i);
+    });
+
+node.append("text")
+    .attr("dy", ".2em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Name.substring(0, d.r / 3);
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+node.append("text")
+    .attr("dy", "1.3em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Count;
+    })
+    .attr("font-family",  "Gill Sans", "Gill Sans MT")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+d3.select(self.frameElement)
+    .style("height", diameter + "px");
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var bubble = d3.pack(cathegorie3)
+            .size([diameter, diameter])
+            .padding(1.5);
+
+var node = svg.selectAll(".node")
+            .data(bubble(nodes).descendants())
+            .enter()
+            .filter(function(d){
+                return  !d.children
+            })
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+//B4
+
+var svg = d3.select("#bubble4")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
+
+var nodes = d3.hierarchy(cathegorie4)
+    .sum(function(d) { return d.Count; });
+
+var node = svg.selectAll(".node")
+    .data(bubble(nodes).descendants())
+    .enter()
+    .filter(function(d){
+        return  !d.children
+    })
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+    });
+
+node.append("title")
+    .text(function(d) {
+        return d.Name + ": " + d.Count;
+    });
+
+node.append("circle")
+    .attr("r", function(d) {
+        return d.r;
+    })
+    .style("fill", function(d,i) {
+        return color(i);
+    });
+
+node.append("text")
+    .attr("dy", ".2em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Name.substring(0, d.r / 3);
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+node.append("text")
+    .attr("dy", "1.3em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+        return d.data.Count;
+    })
+    .attr("font-family",  "Gill Sans", "Gill Sans MT")
+    .attr("font-size", function(d){
+        return d.r/5;
+    })
+    .attr("fill", "white");
+
+d3.select(self.frameElement)
+    .style("height", diameter + "px");
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+var bubble = d3.pack(cathegorie4)
+            .size([diameter, diameter])
+            .padding(1.5);
+
+var node = svg.selectAll(".node")
+            .data(bubble(nodes).descendants())
+            .enter()
+            .filter(function(d){
+                return  !d.children
+            })
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
