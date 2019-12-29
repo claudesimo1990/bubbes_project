@@ -1,358 +1,56 @@
-cathegorie1 = {
-    "children": [{"Name":"ÖL","Count":4319},
-        {"Name":"Tea","Count":4159},
-        {"Name":"Mashed Potatoes","Count":2583},
-        {"Name":"Boiled Potatoes","Count":2074},
-        {"Name":"Milk","Count":1894}]
-};
-cathegorie2 = {
-    "children": [{"Name":"WASSER","Count":4319},
-        {"Name":"Tea","Count":4159},
-        {"Name":"Mashed Potatoes","Count":2583},
-        {"Name":"Boiled Potatoes","Count":2074},
-        {"Name":"Milk","Count":1894}]
-};
-cathegorie3 = {
-    "children": [{"Name":"GEMUSE","Count":4319},
-        {"Name":"Tea","Count":4159},
-        {"Name":"Mashed Potatoes","Count":2583},
-        {"Name":"Boiled Potatoes","Count":2074},
-        {"Name":"Milk","Count":1894}]
-};
-cathegorie4 = {
-    "children": [{"Name":"OBST","Count":4319},
-        {"Name":"Tea","Count":4159},
-        {"Name":"Mashed Potatoes","Count":2583},
-        {"Name":"Boiled Potatoes","Count":2074},
-        {"Name":"Milk","Count":1894}]
-};
 
-var diameter = 300;
-var color = d3.scaleOrdinal(d3.schemeCategory20);
+var inputData =
+[{month:1,type:"Category 1",value:25},
+{month:2,type:"Category 1",value:15},
+{month:3,type:"Category 1",value:27},
+{month:4,type:"Category 1",value:10},
+{month:5,type:"Category 1",value:54},
+{month:6,type:"Category 1",value:23},
+{month:7,type:"Category 1",value:31},
+{month:8,type:"Category 1",value:17},
+{month:9,type:"Category 1",value:8},
+{month:10,type:"Category 1",value:12},
+{month:11,type:"Category 1",value:32},
+{month:12,type:"Category 1",value:35},
+{month:1,type:"Category 2",value:19},
+{month:2,type:"Category 2",value:24},
+{month:3,type:"Category 2",value:27},
+{month:4,type:"Category 2",value:12},
+{month:5,type:"Category 2",value:19},
+{month:6,type:"Category 2",value:30},
+{month:7,type:"Category 2",value:31},
+{month:8,type:"Category 2",value:25},
+{month:9,type:"Category 2",value:20},
+{month:10,type:"Category 2",value:5},
+{month:11,type:"Category 2",value:21},
+{month:12,type:"Category 2",value:10},
+{month:1,type:"Category 3",value:19},
+{month:2,type:"Category 3",value:3},
+{month:3,type:"Category 3",value:32},
+{month:4,type:"Category 3",value:23},
+{month:5,type:"Category 3",value:9},
+{month:6,type:"Category 3",value:17},
+{month:7,type:"Category 3",value:25},
+{month:8,type:"Category 3",value:29},
+{month:9,type:"Category 3",value:32},
+{month:10,type:"Category 3",value:33},
+{month:11,type:"Category 3",value:19},
+{month:12,type:"Category 3",value:24},
+{month:1,type:"Category 4",value:12},
+{month:2,type:"Category 4",value:43},
+{month:3,type:"Category 4",value:12},
+{month:4,type:"Category 4",value:23},
+{month:5,type:"Category 4",value:14},
+{month:6,type:"Category 4",value:19},
+{month:7,type:"Category 4",value:22},
+{month:8,type:"Category 4",value:39},
+{month:9,type:"Category 4",value:22},
+{month:10,type:"Category 4",value:26},
+{month:11,type:"Category 4",value:31},
+{month:12,type:"Category 4",value:25},
+];
 
-var bubble = d3.pack(cathegorie1)
-    .size([diameter, diameter])
-    .padding(1.5);
-//B1
-var svg = d3.select("#bubble1")
-    .append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-    .attr("class", "bubble");
+var radial_labels = ["Category 1","Category 2","Category 3","Category 4"];
+var segment_labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-var nodes = d3.hierarchy(cathegorie1)
-    .sum(function(d) { return d.Count; });
-
-var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function(d){
-        return  !d.children
-    })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    });
-
-node.append("title")
-    .text(function(d) {
-        return d.Name + ": " + d.Count;
-    });
-
-node.append("circle")
-    .attr("r", function(d) {
-        return d.r;
-    })
-    .style("fill", function(d,i) {
-        return color(i);
-    });
-
-node.append("text")
-    .attr("dy", ".2em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Name.substring(0, d.r / 3);
-    })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-node.append("text")
-    .attr("dy", "1.3em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Count;
-    })
-    .attr("font-family",  "Gill Sans", "Gill Sans MT")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-d3.select(self.frameElement)
-    .style("height", diameter + "px");
-
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-var bubble = d3.pack(cathegorie1)
-            .size([diameter, diameter])
-            .padding(1.5);
-
-var node = svg.selectAll(".node")
-            .data(bubble(nodes).descendants())
-            .enter()
-            .filter(function(d){
-                return  !d.children
-            })
-            .append("g")
-            .attr("class", "node")
-            .attr("transform", function(d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
-//B2
-var diameter = 300;
-var color = d3.scaleOrdinal(d3.schemeCategory20);
-var bubble = d3.pack(cathegorie2)
-
-    .size([diameter, diameter])
-    .padding(1.5);
-var svg = d3.select("#bubble2")
-    .append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-    .attr("class", "bubble");
-
-var nodes = d3.hierarchy(cathegorie2)
-    .sum(function(d) { return d.Count; });
-
-var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function(d){
-        return  !d.children
-    })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    });
-
-node.append("title")
-    .text(function(d) {
-        return d.Name + ": " + d.Count;
-    });
-
-node.append("circle")
-    .attr("r", function(d) {
-        return d.r;
-    })
-    .style("fill", function(d,i) {
-        return color(i);
-    });
-
-node.append("text")
-    .attr("dy", ".2em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Name.substring(0, d.r / 3);
-    })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-node.append("text")
-    .attr("dy", "1.3em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Count;
-    })
-    .attr("font-family",  "Gill Sans", "Gill Sans MT")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-d3.select(self.frameElement)
-    .style("height", diameter + "px");
-
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-var bubble = d3.pack(cathegorie2)
-            .size([diameter, diameter])
-            .padding(1.5);
-
-var node = svg.selectAll(".node")
-            .data(bubble(nodes).descendants())
-            .enter()
-            .filter(function(d){
-                return  !d.children
-            })
-            .append("g")
-            .attr("class", "node")
-            .attr("transform", function(d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
-//B3
-var svg = d3.select("#bubble3")
-    .append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-    .attr("class", "bubble");
-
-var nodes = d3.hierarchy(cathegorie3)
-    .sum(function(d) { return d.Count; });
-
-var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function(d){
-        return  !d.children
-    })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    });
-
-node.append("title")
-    .text(function(d) {
-        return d.Name + ": " + d.Count;
-    });
-
-node.append("circle")
-    .attr("r", function(d) {
-        return d.r;
-    })
-    .style("fill", function(d,i) {
-        return color(i);
-    });
-
-node.append("text")
-    .attr("dy", ".2em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Name.substring(0, d.r / 3);
-    })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-node.append("text")
-    .attr("dy", "1.3em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Count;
-    })
-    .attr("font-family",  "Gill Sans", "Gill Sans MT")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-d3.select(self.frameElement)
-    .style("height", diameter + "px");
-
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-var bubble = d3.pack(cathegorie3)
-            .size([diameter, diameter])
-            .padding(1.5);
-
-var node = svg.selectAll(".node")
-            .data(bubble(nodes).descendants())
-            .enter()
-            .filter(function(d){
-                return  !d.children
-            })
-            .append("g")
-            .attr("class", "node")
-            .attr("transform", function(d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
-//B4
-
-var svg = d3.select("#bubble4")
-    .append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-    .attr("class", "bubble");
-
-var nodes = d3.hierarchy(cathegorie4)
-    .sum(function(d) { return d.Count; });
-
-var node = svg.selectAll(".node")
-    .data(bubble(nodes).descendants())
-    .enter()
-    .filter(function(d){
-        return  !d.children
-    })
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-    });
-
-node.append("title")
-    .text(function(d) {
-        return d.Name + ": " + d.Count;
-    });
-
-node.append("circle")
-    .attr("r", function(d) {
-        return d.r;
-    })
-    .style("fill", function(d,i) {
-        return color(i);
-    });
-
-node.append("text")
-    .attr("dy", ".2em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Name.substring(0, d.r / 3);
-    })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-node.append("text")
-    .attr("dy", "1.3em")
-    .style("text-anchor", "middle")
-    .text(function(d) {
-        return d.data.Count;
-    })
-    .attr("font-family",  "Gill Sans", "Gill Sans MT")
-    .attr("font-size", function(d){
-        return d.r/5;
-    })
-    .attr("fill", "white");
-
-d3.select(self.frameElement)
-    .style("height", diameter + "px");
-
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-var bubble = d3.pack(cathegorie4)
-            .size([diameter, diameter])
-            .padding(1.5);
-
-var node = svg.selectAll(".node")
-            .data(bubble(nodes).descendants())
-            .enter()
-            .filter(function(d){
-                return  !d.children
-            })
-            .append("g")
-            .attr("class", "node")
-            .attr("transform", function(d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
+loadCircularHeatMap(inputData,"#chart",radial_labels, segment_labels);
