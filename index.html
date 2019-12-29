@@ -17,6 +17,32 @@
         fill:#9b59b6;
     }
 
+    .tooltip {
+        background: #eee;
+        box-shadow: 0 0 5px #999999;
+        color: #333;
+        font-size: 12px;
+        left: 130px;
+        padding: 10px;
+        position: absolute;
+        text-align: center;
+        top: 95px;
+        z-index: 10;
+        display: block;
+        opacity: 0;
+    }
+
+    .title{
+        font-size:16px;
+    }
+    .container{
+        text-align: center;
+        margin-top: 10%;
+    }
+    .context-dark, .bg-gray-dark, .bg-primary {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
     .footer-classic a, .footer-classic a:focus, .footer-classic a:active {
         color: #ffffff;
     }
@@ -35,6 +61,20 @@
         list-style: none;
         padding: 0;
         margin: 0;
+    }
+
+    .social-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 23px;
+        font: 900 13px/1 "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .social-container .col {
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .nav-list li a:before {
         content: "\f14f";
