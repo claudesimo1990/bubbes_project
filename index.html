@@ -54,7 +54,7 @@
 </style>
 
 <body>
-<div class="container">
+<div class="container" style="margin-bottom: 5%">
     <svg width="600" height="600">
         <g transform="translate(50,50)">
             <g class="circular-heat" transform="translate(220,220)">
@@ -155,7 +155,8 @@
                     <path id="segment-label-path-1" d="m0 -202 a202 202 0 1 1 -1 0"></path>
                 </def>
                 <text>
-                    <textPath xlink:href="#segment-label-path-1" startOffset="2%" style="font-size: 20px;text-align: center">January
+                    <textPath xlink:href="#segment-label-path-1" startOffset="2%"
+                              style="font-size: 20px;text-align: center">January
                     </textPath>
                 </text>
                 <text>
@@ -213,17 +214,15 @@
             </g>
         </g>
     </svg>
-    <div class="text" style="display: none; opacity: 0; top: 392px; left: 464px;">
-        <div class="month"><b> Month: 5</b></div>
-        <div class="value"><b> Value: 14</b></div>
-        <div class="type"><b> Type: Category 4</b></div>
-    </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+<footer class="section footer-classic context-dark bg-image" style="background:rgb(56, 123, 177)">
+    <div class="row no-gutters social-container">
+        <div class="col"><a class="social-inner" href="#"><span
+                class="icon mdi mdi-instagram"></span><span>Impressum</span></a></div>
+        <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-twitter"></span><span>AGB</span></a>
+        </div>
     </div>
-    <script src="js/bubbles.js"></script>
 </footer>
+<script src="js/bubbles.js"></script>
 </body>
 </html>
