@@ -1,24 +1,5 @@
- .tooltip {
-    background: #eee;
-    box-shadow: 0 0 5px #999999;
-    color: #333;
-    font-size: 12px;
-    left: 130px;
-    padding: 10px;
-    position: absolute;
+ .container{
     text-align: center;
-    top: 95px;
-    z-index: 10;
-    display: block;
-    opacity: 0;
-  }
-  
-  .title{
-  font-size:16px;
-  }
-  .container{
-    text-align: center;
-    margin-top: 10%;
   }
 .context-dark, .bg-gray-dark, .bg-primary {
   color: rgba(255, 255, 255, 0.8);

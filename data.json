@@ -1,0 +1,41 @@
+{
+  "name": "data",
+  "children": [
+    {
+      "name": "Produkte",
+      "children": [
+        {
+          "name": "Lakritz",
+          "children": [
+            {"name": "test1",              "size": 0.1},
+            {"name": "test2",             "size": 0.1},
+            {"name": "test3",          "size": 0.1}
+          ]
+        },
+        {
+          "name": "Fruchtgummi",
+          "children": [
+            {"name": "Mosquito",          "size": 0.1},
+            {"name": "Butterfly",         "size": 0.1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Haribo",
+      "children": [
+        {"name": "Trees",                 "size": 0.1},
+        {"name": "Flowers",               "size": 0.1},
+        {"name": "test",               "size": 0.1}
+      ]
+    },
+    {
+      "name": "Süßigkeiten",
+      "children": [
+        {"name": "Bender",                "size": 0.333},
+        {"name": "Terminator",            "size": 0.333},
+        {"name": "Wall-e",                "size": 0.333}
+      ]
+    }
+  ]
+}
