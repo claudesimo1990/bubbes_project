@@ -1,207 +1,241 @@
-(function() {
+function loadCircularHeatMap(dataset, dom_element_to_append_to, radial_labels, segment_labels) {
 
-    var margin = {top: 350, right: 480, bottom: 350, left: 480},
-        radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 50;
+    var margin = {top: 50, right: 50, bottom: 50, left: 50};
+    var width = 1100 - margin.left - margin.right;
 
-    var hue = d3.scale.category10();
+    var height = width;
+    var innerRadius = width / 14;
+    var segmentHeight = (width - margin.top - margin.bottom - 2 * innerRadius) / (2 * radial_labels.length)
 
-    var luminance = d3.scale.sqrt()
-        .domain([0, 10])
-        .clamp(true)
-        .range([90, 20]);
+    var chart = circularHeatChart()
+        .innerRadius(innerRadius)
+        .segmentHeight(segmentHeight)
+        .range(["white", "#01579b"])
+        .radialLabels(radial_labels)
+        .segmentLabels(segment_labels);
 
-    var svg = d3.select("#partition").append("svg")
-        .attr("width", margin.left + margin.right)
-        .attr("height", margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    chart.accessor(function (d) {
+        return d.value;
+    })
 
-    var partition = d3.layout.partition()
-        .sort(function(a, b) { return d3.ascending(a.name, b.name); })
-        .size([2 * Math.PI, radius]);
+    var svg = d3.select(dom_element_to_append_to)
+        .selectAll('svg')
+        .data([dataset])
+        .enter()
+        .append('svg')
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append('g')
+        .attr("transform",
+            "translate(" + ((width) / 2 - (radial_labels.length * segmentHeight + innerRadius)) + "," + margin.top + ")")
+        .call(chart);
 
-    var arc = d3.svg.arc()
-        .startAngle(function(d) { return d.x; })
-        .endAngle(function(d) { return d.x + d.dx ; })
-        .padAngle(.01)
-        .padRadius(radius / 3)
-        .innerRadius(function(d) { return radius / 3 * d.depth; })
-        .outerRadius(function(d) { return radius / 3 * (d.depth + 1) - 1; });
+    var tooltip = d3.select(dom_element_to_append_to)
+        .append('div')
+        .attr('class', 'tooltip');
 
-    d3.json("data.json", function(error, root) {
-        if (error) throw error;
+    tooltip.append('div')
+        .attr('class', 'month');
+    tooltip.append('div')
+        .attr('class', 'value');
+    tooltip.append('div')
+        .attr('class', 'type');
 
-        // Compute the initial layout on the entire tree to sum sizes.
-        // Also compute the full name and fill color for each node,
-        // and stash the children so they can be restored as we descend.
-        partition
-            .value(function(d) { return d.size; })
-            .nodes(root)
-            .forEach(function(d) {
-                d._children = d.children;
-                d.sum = d.value;
-                d.key = key(d);
-                d.fill = fill(d);
-            });
+    svg.selectAll("path")
+        .on('mouseover', function (d) {
+            tooltip.select('.month').html("<b> Month: " + d.month + "</b>");
+            tooltip.select('.type').html("<b> Type: " + d.type + "</b>");
+            tooltip.select('.value').html("<b> Value: " + d.value + "</b>");
 
-        // Now redefine the value function to use the previously-computed sum.
-        partition
-            .children(function(d, depth) { return depth < 2 ? d._children : null; })
-            .value(function(d) { return d.sum; });
+            tooltip.style('display', 'block');
+            tooltip.style('opacity', 2);
+        })
+        .on('mousemove', function (d) {
 
-        // if click on center: zoomOut
-        var center = svg.append("circle")
-            .attr("r", radius / 3)
-            .on("click", zoomOut);
-        // Add text when mouse is over the center
-        center.append("title")
-            .text("zoom out");
+            tooltip.style('top', (d3.event.layerY + 10) + 'px')
+                .style('left', (d3.event.layerX - 25) + 'px');
+        })
+        .on('mouseout', function (d) {
+            tooltip.style('display', 'none');
+            tooltip.style('opacity', 0);
+        });
+}
 
-        var path = svg.selectAll("path")
-            .data(partition.nodes(root).slice(1))
-            .enter().append("path")
-            .attr("d", arc)
-            .style("fill", function(d) { return d.fill; })
-            .each(function(d) { this._current = updateArc(d); })
-            .on("click", zoomIn);
+function circularHeatChart() {
+    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+        innerRadius = 10,
+        numSegments = 12,
+        segmentHeight = 20,
+        domain = null,
+        range = ["white", "red"],
+        accessor = function (d) {
+            return d;
+        },
+        radialLabels = segmentLabels = [];
 
-        // adding labels
-        var text = svg.selectAll("text")
-            .data(partition.nodes(root).slice(1))
-            .enter().append("text")
-            .style("font-size", "15px")
-            .attr("text-anchor", "middle")
-            .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-            .attr("x", function(d) { return (d.x); })
-            .attr("y", function(d) { return d.y+d.dy/2; })
-            .attr("dx", "-4") // margin
-            .attr("dy", ".15em") // vertical-align
-            .text(function(d) { return d.name; })
-            .on("click", zoomIn);
+    function chart(selection) {
+        selection.each(function (data) {
+            var svg = d3.select(this);
 
-        function zoomIn(p) {
-            if (p.depth > 1) p = p.parent;
-            if (!p.children) return;
-            zoom(p, p);
-        }
+            var offset = innerRadius + Math.ceil(data.length / numSegments) * segmentHeight;
+            g = svg.append("g")
+                .classed("circular-heat", true)
+                .attr("transform", "translate(" + parseInt(margin.left + offset) + "," + parseInt(margin.top + offset) + ")");
 
-        function zoomOut(p) {
-            if (!p.parent) return;
-            zoom(p.parent, p);
-        }
-
-        // Zoom to the specified new root.
-        function zoom(root, p) {
-            if (document.documentElement.__transition__) return;
-
-            // Rescale outside angles to match the new layout.
-            var enterArc,
-                exitArc,
-                outsideAngle = d3.scale.linear().domain([0, 2 * Math.PI]);
-
-            function insideArc(d) {
-                return p.key > d.key
-                    ? {depth: d.depth - 1, x: 0, dx: 0} : p.key < d.key
-                        ? {depth: d.depth - 1, x: 2 * Math.PI, dx: 0}
-                        : {depth: 0, x: 0, dx: 2 * Math.PI};
+            var autoDomain = false;
+            if (domain === null) {
+                domain = d3.extent(data, accessor);
+                autoDomain = true;
             }
+            var color = d3.scale.linear().domain(domain).range(range);
+            if (autoDomain)
+                domain = null;
 
-            function outsideArc(d) {
-                return {depth: d.depth + 1, x: outsideAngle(d.x), dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)};
-            }
+            g.selectAll("path").data(data)
+                .enter().append("path")
+                .attr("d", d3.svg.arc().innerRadius(ir).outerRadius(or).startAngle(sa).endAngle(ea))
+                .attr("stroke", function (d) {
+                    return "#4f5b69";
+                })
+                .attr("fill", function (d) {
+                    return color(accessor(d));
+                });
 
-            center.datum(root);
+            // Unique id so that the text path defs are unique - is there a better way to do this?
+            var id = d3.selectAll(".circular-heat")[0].length;
 
-            // When zooming in, arcs enter from the outside and exit to the inside.
-            // Entering outside arcs start from the old layout.
-            if (root === p) enterArc = outsideArc, exitArc = insideArc, outsideAngle.range([p.x, p.x + p.dx]);
+            //Radial labels
+            var lsa = 0.03; //Label start angle
+            var labels = svg.append("g")
+                .classed("labels", true)
+                .classed("radial", true)
+                .attr("transform", "translate(" + parseInt(margin.left + offset) + "," + parseInt(margin.top + offset) + ")");
 
-            // When zooming out, arcs enter from the inside and exit to the outside.
-            // Exiting outside arcs transition to the new layout.
-            if (root !== p) enterArc = insideArc, exitArc = outsideArc, outsideAngle.range([p.x, p.x + p.dx]);
+            console.log(labels)
 
-            // update data
-            path = path.data(partition.nodes(root).slice(1), function(d) { return d.key; });
-            text = text.data(partition.nodes(root).slice(1), function(d) { return d.key; });
+            labels.selectAll("def")
+                .data(radialLabels).enter()
+                .append("def")
+                .append("path")
+                .attr("id", function (d, i) {
+                    return "radial-label-path-" + id + "-" + i;
+                })
+                .attr("d", function (d, i) {
+                    var r = innerRadius + ((i + 0.2) * segmentHeight);
+                    return "m" + r * Math.sin(lsa) + " -" + r * Math.cos(lsa) +
+                        " a" + r + " " + r + " 0 1 1 -1 0";
+                });
 
-            d3.transition().duration(d3.event.altKey ? 7500 : 750).each(function() {
-                path.exit().transition()
-                    .style("fill-opacity", function(d) { return d.depth === 1 + (root === p) ? 1 : 0; })
-                    .attrTween("d", function(d) { return arcTween.call(this, exitArc(d)); })
-                    .remove()
+            labels.selectAll("text")
+                .data(radialLabels).enter()
+                .append("text")
+                .append("textPath")
+                .attr("xlink:href", function (d, i) {
+                    return "#radial-label-path-" + id + "-" + i;
+                })
+                .style("font-size", "13px")
+                .text(function (d) {
+                    return d;
+                });
 
-                path.enter().append("path")
-                    .style("fill-opacity", function(d) { return d.depth === 2 - (root === p) ? 1 : 0; })
-                    .style("fill", function(d) { return d.fill; })
-                    .on("click", zoomIn)
-                    .each(function(d) { this._current = enterArc(d); });
+            //Segment labels
+            var segmentLabelOffset = 10;
+            var r = innerRadius + Math.ceil(data.length / numSegments) * segmentHeight + segmentLabelOffset;
+            labels = svg.append("g")
+                .classed("labels", true)
+                .classed("segment", true)
+                .attr("transform", "translate(" + parseInt(margin.left + offset) + "," + parseInt(margin.top + offset) + ")");
+            labels.append("def")
+                .append("path")
+                .attr("id", "segment-label-path-" + id)
+                .attr("d", "m0 -" + r + " a" + r + " " + r + " 0 1 1 -1 0");
 
-                path.transition()
-                    .style("fill-opacity", 1)
-                    .attrTween("d", function(d) { return arcTween.call(this, updateArc(d)); });
+            labels.selectAll("text")
+                .data(segmentLabels).enter()
+                .append("text")
+                .append("textPath")
+                .attr("xlink:href", "#segment-label-path-" + id)
+                .style("font-size", "16px")
+                .attr("startOffset", function (d, i) {
+                    return i * 115 / numSegments + "%";
+                })
+                .text(function (d) {
+                    return d;
+                });
+        });
 
-                text.exit().transition()
-                    .duration(d3.event.altKey ? 3750 : 375)
-                    .style("opacity", 0)
-                    .remove()
-
-                text.enter().append("text")
-                    .style("opacity", 1)
-                    .on("click", zoomIn)
-
-                text.transition()
-                    .style("opacity", 0).duration(d3.event.altKey ? 3750 : 375)
-                    .transition().duration(d3.event.altKey ? 3750 : 375)
-                    .style("opacity", 1)
-                    .style("font-size", "15px")
-                    .attr("text-anchor", "middle")
-                    .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-                    .attr("x", function(d) { return (d.x); })
-                    .attr("y", function(d) { return d.y+d.dy/2; })
-                    .attr("dx", "-4") // margin
-                    .attr("dy", ".15em") // vertical-align
-                    .text(function(d) { return d.name; })
-                    .each(function(d) { this._current = updateText(d); })
-            });
-
-        }
-    });
-
-    function key(d) {
-        var k = [], p = d;
-        while (p.depth) k.push(p.name), p = p.parent;
-        return k.reverse().join(".");
     }
 
-    function fill(d) {
-        var p = d;
-        while (p.depth > 1) p = p.parent;
-        var c = d3.lab(hue(p.name));
-        c.l = luminance(d.sum);
-        return c;
+    /* Arc functions */
+    ir = function (d, i) {
+        return innerRadius + Math.floor(i / numSegments) * segmentHeight;
+    }
+    or = function (d, i) {
+        return innerRadius + segmentHeight + Math.floor(i / numSegments) * segmentHeight;
+    }
+    sa = function (d, i) {
+        return (i * 2 * Math.PI) / numSegments;
+    }
+    ea = function (d, i) {
+        return ((i + 1) * 2 * Math.PI) / numSegments;
     }
 
-    function arcTween(b) {
-        var i = d3.interpolate(this._current, b);
-        this._current = i(0);
-        return function(t) {
-            return arc(i(t));
-        };
-    }
+    /* Configuration getters/setters */
+    chart.margin = function (_) {
+        if (!arguments.length) return margin;
+        margin = _;
+        return chart;
+    };
 
-    function updateArc(d) {
-        return {depth: d.depth, x: d.x, dx: d.dx};
-    }
+    chart.innerRadius = function (_) {
+        if (!arguments.length) return innerRadius;
+        innerRadius = _;
+        return chart;
+    };
 
-    function updateText(d) {
-        return {x: d.x, y: d.y, dy: d.dy, name: d.name};
-    }
+    chart.numSegments = function (_) {
+        if (!arguments.length) return numSegments;
+        numSegments = _;
+        return chart;
+    };
 
-    function computeTextRotation(d) {
-        return (d.x + d.dx / 2 - Math.PI)*180/Math.PI;
-    }
+    chart.segmentHeight = function (_) {
+        if (!arguments.length) return segmentHeight;
+        segmentHeight = _;
+        return chart;
+    };
 
+    chart.domain = function (_) {
+        if (!arguments.length) return domain;
+        domain = _;
+        return chart;
+    };
 
-    d3.select(self.frameElement).style("height", margin.top + margin.bottom + "px");
+    chart.range = function (_) {
+        if (!arguments.length) return range;
+        range = _;
+        return chart;
+    };
 
-})();
+    chart.radialLabels = function (_) {
+        if (!arguments.length) return radialLabels;
+        if (_ == null) _ = [];
+        radialLabels = _;
+        return chart;
+    };
+
+    chart.segmentLabels = function (_) {
+        if (!arguments.length) return segmentLabels;
+        if (_ == null) _ = [];
+        segmentLabels = _;
+        return chart;
+    };
+
+    chart.accessor = function (_) {
+        if (!arguments.length) return accessor;
+        accessor = _;
+        return chart;
+    };
+
+    return chart;
+}

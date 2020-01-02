@@ -78,16 +78,39 @@
         text-decoration: none;
         color: #333333;
     }
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+    path:hover {
+        fill: green;
+    }
+    .tooltip {
+        background: #eee;
+        box-shadow: 0 0 5px #999999;
+        color: #333;
+        font-size: 12px;
+        left: 130px;
+        padding: 10px;
+        position: absolute;
+        text-align: center;
+        top: 95px;
+        z-index: 10;
+        display: block;
+        opacity: 0;
+    }
 </style>
 
 <body>
-<div class="container" style="margin-bottom: 5%;margin-top: 0">
+<div class="container" style="margin-bottom: 5%;margin-top: 3%">
     <a href="index.html">
         <div class="logo">
             BU<span style="color:#007bff">BB</span>LES
         </div>
     </a>
-    <div id="partition"></div>
+    <div id="chart"></div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -146,5 +169,6 @@
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="js/bubbles.js"></script>
+<script src="js/scrolling-nav.js"></script>
 </body>
 </html>

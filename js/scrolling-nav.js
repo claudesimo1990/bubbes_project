@@ -1,29 +1,79 @@
-(function($) {
-  "use strict"; // Start of use strict
+var inputData =
+    [{month: 1, type: "haribot", value: 25},
+        {month: 2, type: "Category 1", value: 15},
+        {month: 3, type: "Category 1", value: 27},
+        {month: 4, type: "Category 1", value: 10},
+        {month: 5, type: "Category 1", value: 54},
+        {month: 6, type: "Category 1", value: 23},
+        {month: 7, type: "Category 1", value: 31},
+        {month: 8, type: "Category 1", value: 17},
+        {month: 9, type: "Category 1", value: 8},
+        {month: 10, type: "Category 1", value: 12},
+        {month: 11, type: "Category 1", value: 32},
+        {month: 12, type: "Category 1", value: 35},
+        {month: 1, type: "Category 2", value: 19},
+        {month: 2, type: "Category 2", value: 24},
+        {month: 3, type: "Category 2", value: 27},
+        {month: 4, type: "Category 2", value: 12},
+        {month: 5, type: "Category 2", value: 19},
+        {month: 6, type: "Category 2", value: 30},
+        {month: 7, type: "Category 2", value: 31},
+        {month: 8, type: "Category 2", value: 25},
+        {month: 9, type: "Category 2", value: 20},
+        {month: 10, type: "Category 2", value: 5},
+        {month: 11, type: "Category 2", value: 21},
+        {month: 12, type: "Category 2", value: 10},
+        {month: 1, type: "Category 3", value: 19},
+        {month: 2, type: "Category 3", value: 3},
+        {month: 3, type: "Category 3", value: 32},
+        {month: 4, type: "Category 3", value: 23},
+        {month: 5, type: "Category 3", value: 9},
+        {month: 6, type: "Category 3", value: 17},
+        {month: 7, type: "Category 3", value: 25},
+        {month: 8, type: "Category 3", value: 29},
+        {month: 9, type: "Category 3", value: 32},
+        {month: 10, type: "Category 3", value: 33},
+        {month: 11, type: "Category 3", value: 19},
+        {month: 12, type: "Category 3", value: 24},
+        {month: 1, type: "Category 4", value: 12},
+        {month: 2, type: "Category 4", value: 43},
+        {month: 3, type: "Category 4", value: 12},
+        {month: 4, type: "Category 4", value: 23},
+        {month: 5, type: "Category 4", value: 14},
+        {month: 6, type: "Category 4", value: 19},
+        {month: 7, type: "Category 4", value: 22},
+        {month: 8, type: "Category 4", value: 39},
+        {month: 9, type: "Category 4", value: 22},
+        {month: 10, type: "Category 4", value: 26},
+        {month: 11, type: "Category 4", value: 31},
+        {month: 12, type: "Category 4", value: 25},
+        {month: 1, type: "Category 5", value: 12},
+        {month: 2, type: "Category 5", value: 43},
+        {month: 3, type: "Category 5", value: 12},
+        {month: 4, type: "Category 5", value: 23},
+        {month: 5, type: "Category 5", value: 14},
+        {month: 6, type: "Category 5", value: 19},
+        {month: 7, type: "Category 5", value: 22},
+        {month: 8, type: "Category 5", value: 39},
+        {month: 9, type: "Category 5", value: 22},
+        {month: 10, type: "Category 5", value: 26},
+        {month: 11, type: "Category 5", value: 31},
+        {month: 12, type: "Category 5", value: 25},
+        {month: 1, type: "Category 6", value: 12},
+        {month: 2, type: "Category 6", value: 43},
+        {month: 3, type: "Category 6", value: 12},
+        {month: 4, type: "Category 6", value: 23},
+        {month: 5, type: "Category 6", value: 14},
+        {month: 6, type: "Category 6", value: 19},
+        {month: 7, type: "Category 6", value: 22},
+        {month: 8, type: "Category 6", value: 39},
+        {month: 9, type: "Category 6", value: 22},
+        {month: 10, type: "Category 6", value: 26},
+        {month: 11, type: "Category 6", value: 31},
+        {month: 12, type: "Category 6", value: 25},
+    ];
 
-  // Smooth scrolling using jQuery easing
-  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      var target = $(this.hash);
-      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-      if (target.length) {
-        $('html, body').animate({
-          scrollTop: (target.offset().top - 56)
-        }, 1000, "easeInOutExpo");
-        return false;
-      }
-    }
-  });
+var radial_labels = ["PG-1", "p1", "p2", "p3", "p4", "p5"];
+var segment_labels = ['weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...', 'weiter...'];
 
-  // Closes responsive menu when a scroll trigger link is clicked
-  $('.js-scroll-trigger').click(function() {
-    $('.navbar-collapse').collapse('hide');
-  });
-
-  // Activate scrollspy to add active class to navbar items on scroll
-  $('body').scrollspy({
-    target: '#mainNav',
-    offset: 56
-  });
-
-})(jQuery); // End of use strict
+loadCircularHeatMap(inputData, "#chart", radial_labels, segment_labels);
