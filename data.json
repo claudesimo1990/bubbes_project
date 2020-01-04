@@ -1,40 +1,250 @@
 {
-  "name": "data",
+  "name": "flare",
   "children": [
     {
-      "name": "Produkte",
+      "name": "Phoneix AZ",
       "children": [
         {
-          "name": "Lakritz",
+          "name": "Fast Food",
           "children": [
-            {"name": "test1",              "size": 0.1},
-            {"name": "test2",             "size": 0.1},
-            {"name": "test3",          "size": 0.1}
+            {"name": "insertvalue", "value": 3938}
           ]
         },
         {
-          "name": "Fruchtgummi",
+          "name": "Pizza",
           "children": [
-            {"name": "Mosquito",          "size": 0.1},
-            {"name": "Butterfly",         "size": 0.1}
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Mexican",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Chinese",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Deli",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Burger",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
           ]
         }
       ]
     },
     {
-      "name": "Haribo",
+      "name": "Toronto ON",
       "children": [
-        {"name": "Trees",                 "size": 0.1},
-        {"name": "Flowers",               "size": 0.1},
-        {"name": "test",               "size": 0.1}
+        {
+          "name": "Fast Food",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Mexican",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Chinese",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Deli",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Burger",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        }
       ]
     },
     {
-      "name": "Süßigkeiten",
+      "name": "Las Vegas NV",
       "children": [
-        {"name": "Bender",                "size": 0.333},
-        {"name": "Terminator",            "size": 0.333},
-        {"name": "Wall-e",                "size": 0.333}
+        {
+          "name": "Fast Food",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Mexican",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Chinese",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Deli",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Burger",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cleveland OH",
+      "children": [
+        {
+          "name": "Fast Food",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Mexican",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Chinese",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Deli",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Burger",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pittsburgh PA",
+      "children": [
+        {
+          "name": "Fast Food",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Mexican",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Chinese",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Deli",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Burger",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Charlotte NC",
+      "children": [
+        {
+          "name": "Fast Food",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Mexican",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Chinese",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Deli",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        },
+        {
+          "name": "Burger",
+          "children": [
+            {"name": "insertvalue", "value": 3938}
+          ]
+        }
       ]
     }
   ]
