@@ -1,0 +1,176 @@
+{
+  "name": "Produktkategorie2",
+  "children": [
+    {
+      "name": "DATA2",
+      "children": [
+        {
+          "name": "Haribo",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Schokolade2",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Kekse2",
+          "children": [
+            {"name": "CS", "size": 1},
+            {"name": "Java01", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Milchprodukte2",
+      "children": [
+        {
+          "name": "Käse2",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Butter2",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Milch2",
+          "children": [
+            {"name": "milch1", "size": 1},
+            {"name": "milch2", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Getränke2",
+      "children": [
+        {
+          "name": "Bier",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Wein2",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Fanta2",
+          "children": [
+            {"name": "CS", "size": 1},
+            {"name": "Java01", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tiefkühl2",
+      "children": [
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Obst2",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Gemüse2",
+          "children": [
+            {"name": "CS", "size": 1},
+            {"name": "Java01", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Obst2",
+      "children": [
+        {
+          "name": "Apfel",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Banane",
+          "children": [
+            {"name": "Cola", "size": 1},
+            {"name": "Wasser", "size": 1}
+          ]
+        },
+        {
+          "name": "Orangen",
+          "children": [
+            {"name": "Fleisch", "size": 1},
+            {"name": "Fisch", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gemüse2",
+      "children": [
+        {
+          "name": "Tomaten",
+          "children": [
+            {"name": "Papaya", "size": 1},
+            {"name": "Trauben", "size": 1}
+          ]
+        },
+        {
+          "name": "Gurken",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Paprika",
+          "children": [
+            {"name": "Brocoli", "size": 1},
+            {"name": "Auberginen", "size": 1}
+          ]
+        }
+      ]
+    }
+  ]
+}

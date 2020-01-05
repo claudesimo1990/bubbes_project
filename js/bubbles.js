@@ -76,7 +76,20 @@
             .attr("r", radius)
             .attr("fill", "none")
             .attr("pointer-events", "all")
-            .on("click", clicked)
+            .on("click", function (a) {
+                let top = document.getElementById("chart");
+                let top2 = document.getElementById("chart2");
+
+                let nested = document.getElementById("partitionSVG");
+                let nested2 = document.getElementById("partition2SVG");
+                // Throws Uncaught TypeError
+                top.removeChild(nested);
+                top.appendChild(nested2);
+
+                top2.appendChild(nested);
+                top2.removeChild(nested2);
+
+            });
 
         function clicked(p) {
             parent.datum(p.parent || root);
@@ -186,8 +199,8 @@
         function dblclick(a){
             console.log(cleanStringify(a.data))
            var data = JSON.parse(cleanStringify(a.data.name));
-            post_to_url("produkt.php",{"name":data},"Post");
-            //window.open("produkt.php", '_blank')
+            //post_to_url("produkt.php",{"name":data},"Post");
+            window.open("produkt.php?name="+cleanStringify(a.data.name), '_blank')
         }
     });
 

@@ -24,7 +24,7 @@
 
     const {require} = new observablehq.Library;
 
-    d3.json("data.json").then(data => {
+    d3.json("data2.json").then(data => {
         console.log(data);
         const root = partition(data);
         const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -76,7 +76,19 @@
             .attr("r", radius)
             .attr("fill", "none")
             .attr("pointer-events", "all")
-            .on("click", clicked)
+            .on("click", function (a) {
+                let top = document.getElementById("chart2");
+                let top2 = document.getElementById("chart");
+
+                let nested = document.getElementById("partition2SVG");
+                let nested2 = document.getElementById("partitionSVG");
+                // Throws Uncaught TypeError
+                top.removeChild(nested2);
+                top.appendChild(nested);
+
+                top2.appendChild(nested2);
+                top2.removeChild(nested);
+            });
 
         function clicked(p) {
             parent.datum(p.parent || root);

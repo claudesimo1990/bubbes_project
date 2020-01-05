@@ -106,7 +106,7 @@
 
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-3" style="color: #7db169;padding-bottom: 4%"><?= $_POST["name"]; ?></h1>
+                <h1 class="display-3" style="color: #7db169;padding-bottom: 4%"><?= htmlspecialchars((string)$_GET["name"]); ?></h1>
                 <p class="lead"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci fugit natus nulla provident quibusdam quo. Ab alias beatae dolore hic, iusto modi necessitatibus porro, provident quae quia unde vel.</span>
                     <span>Eos quas quod ut? Commodi consequatur cupiditate dignissimos eum illum neque omnis quibusdam quis, sapiente? Ad aspernatur expedita harum nam nesciunt non nostrum optio recusandae sapiente sed sequi similique, veritatis?</span>
                 </p>
