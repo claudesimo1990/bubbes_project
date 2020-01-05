@@ -2,7 +2,7 @@
     'use strict';
 
     const format = d3.format(",d");
-    const width = 700;
+    const width = 500;
     const radius = width / 6;
 
     const arc = d3.arc()
@@ -53,6 +53,7 @@
 
         path.filter(d => d.children)
             .style("cursor", "pointer")
+            .on("dblclick", dblclick)
             .on("click", clicked);
 
         path.append("title")
@@ -75,7 +76,7 @@
             .attr("r", radius)
             .attr("fill", "none")
             .attr("pointer-events", "all")
-            .on("click", clicked);
+            .on("click", clicked)
 
         function clicked(p) {
             parent.datum(p.parent || root);
@@ -122,6 +123,71 @@
             const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
             const y = (d.y0 + d.y1) / 2 * radius;
             return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+        }
+        function post_to_url(path, params, method) {
+            method = method || "post"; // Set method to post by default, if not specified.
+
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            var addField = function( key, value ){
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", value );
+
+                form.appendChild(hiddenField);
+            };
+
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    if( params[key] instanceof Array ){
+                        for(var i = 0; i < params[key].length; i++){
+                            addField( key, params[key][i] )
+                        }
+                    }
+                    else{
+                        addField( key, params[key] );
+                    }
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+        function cleanStringify(object) {
+            if (object && typeof object === 'object') {
+                object = copyWithoutCircularReferences([object], object);
+            }
+            return JSON.stringify(object);
+
+            function copyWithoutCircularReferences(references, object) {
+                var cleanObject = {};
+                Object.keys(object).forEach(function(key) {
+                    var value = object[key];
+                    if (value && typeof value === 'object') {
+                        if (references.indexOf(value) < 0) {
+                            references.push(value);
+                            cleanObject[key] = copyWithoutCircularReferences(references, value);
+                            references.pop();
+                        } else {
+                            cleanObject[key] = '###_Circular_###';
+                        }
+                    } else if (typeof value !== 'function') {
+                        cleanObject[key] = value;
+                    }
+                });
+                return cleanObject;
+            }
+        }
+        function dblclick(a){
+            console.log(cleanStringify(a.data))
+           var data = JSON.parse(cleanStringify(a.data.name));
+            post_to_url("produkt.php",{"name":data},"Post");
+            //window.open("produkt.php", '_blank')
         }
     });
 
