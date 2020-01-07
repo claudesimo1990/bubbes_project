@@ -2,7 +2,7 @@
     'use strict';
 
     const format = d3.format(",d");
-    const width = 600;
+    const width = 650;
     const radius = width / 6;
 
     const arc = d3.arc()
