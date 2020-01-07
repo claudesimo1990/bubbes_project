@@ -32,7 +32,7 @@
         root.each(d => d.current = d);
 
         const svg = d3.select('#partitionSVG')
-            .style("width", "100%")
+            .style("width", "90%")
             .style("height", "auto")
             .style("font", "10px sans-serif");
 
@@ -53,8 +53,11 @@
 
         path.filter(d => d.children)
             .style("cursor", "pointer")
-            .on("dblclick", dblclick)
             .on("click", clicked);
+
+        path.filter(d => d.children)
+            .style("cursor", "pointer")
+            .on("dblclick", dblclick);
 
         path.append("title")
             .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
