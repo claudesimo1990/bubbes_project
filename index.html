@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>Bubbles</title>
-
     <!-- JavaScript Libraries //-->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@observablehq/stdlib"></script>
@@ -104,7 +103,7 @@
     @media only screen and (min-width: 1000px) {
         #chart {
             position: absolute;
-            left: 23%;
+            left: 30%;
             width: 90%;
             height: 90%;
             bottom: 5%;
@@ -114,12 +113,18 @@
 
         #chart2 {
             position: absolute;
-            top: 60px;
+            top: 80px;
             left: 5px;
             width: 40%;
             font: 10px sans-serif;
         }
 
+        .button{
+            position:absolute;
+            right: 63%;
+            top: 20%;
+            cursor: pointer
+        }
         footer {
             background: rgb(56, 123, 177);
             width: 100%;
@@ -136,15 +141,21 @@
             width: 190%;
             height: auto;
             padding-left: 0%;
-            margin-left: -20%;
+            margin-left: -15%;
         }
 
         #chart2 {
             position: absolute;
-            top: 154px;
+            top: 160px;
             left: 5px;
             width: 90%;
             font: 10px sans-serif;
+        }
+        .button{
+            position: absolute;
+            right: 59%;
+            top: 29%;
+            cursor: pointer;
         }
 
         footer {
@@ -165,12 +176,15 @@
         </a>
     </div>
     <div class="kreise" style="padding-top:3%">
-        <div id="chart2" style="">
+        <div id="chart2">
             <svg id="partition2SVG" width="400" height="300" viewBox="0 0 932 932"></svg>
         </div>
         <div id="chart" style="position: relative;">
             <svg id="partitionSVG" width="400" height="300" viewBox="0 0 932 932"></svg>
         </div>
+        <p class="button" style="">
+            <img src="https://img.icons8.com/wired/64/000000/switch.png"onclick='doSwap("partition2SVG", "partitionSVG")'>
+        </p>
     </div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -226,11 +240,40 @@
         </div>
     </div>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="js/bubbles.js"></script>
 <script src="js/scrolling-nav.js"></script>
+<script type="text/javascript">
+    function doSwap(a, b) {
+        swapElements(document.getElementById(a), document.getElementById(b));
+    }
+
+    function swapElements(obj1, obj2) {
+        // save the location of obj2
+        var parent2 = obj2.parentNode;
+        var next2 = obj2.nextSibling;
+        // special case for obj1 is the next sibling of obj2
+        if (next2 === obj1) {
+            // just put obj1 before obj2
+            parent2.insertBefore(obj1, obj2);
+        } else {
+            // insert obj2 right before obj1
+            obj1.parentNode.insertBefore(obj2, obj1);
+
+            // now insert obj1 where obj2 was
+            if (next2) {
+                // if there was an element after obj2, then insert obj1 right before that
+                parent2.insertBefore(obj1, next2);
+            } else {
+                // otherwise, just append as last child
+                parent2.appendChild(obj1);
+            }
+        }
+    }
+</script>
 </body>
 </html>
