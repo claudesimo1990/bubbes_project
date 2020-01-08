@@ -119,12 +119,13 @@
             font: 10px sans-serif;
         }
 
-        .button{
-            position:absolute;
-            right: 63%;
-            top: 20%;
+        .button {
+            position: absolute;
+            left: 10%;
+            bottom: 10%;
             cursor: pointer
         }
+
         footer {
             background: rgb(56, 123, 177);
             width: 100%;
@@ -151,10 +152,12 @@
             width: 90%;
             font: 10px sans-serif;
         }
-        .button{
+
+        .button {
             position: absolute;
-            right: 59%;
-            top: 29%;
+            right: 50%;
+            bottom: 10%;
+            font-size: large;
             cursor: pointer;
         }
 
@@ -165,7 +168,9 @@
             height: 15%;
         }
     }
-
+.btn-primary{
+    background-color: rgb(31, 119, 180) !important;
+}
 </style>
 
 <body>
@@ -182,9 +187,11 @@
         <div id="chart" style="position: relative;">
             <svg id="partitionSVG" width="400" height="300" viewBox="0 0 932 932"></svg>
         </div>
-        <p class="button" style="">
-            <img src="https://img.icons8.com/wired/64/000000/switch.png"onclick='doSwap("partition2SVG", "partitionSVG")'>
-        </p>
+    </div>
+    <div class="button" style="">
+        <button class="btn btn-primary btn-lg btn-block" onclick='doSwap("partition2SVG", "partitionSVG")'>Weitere
+            Produkte...
+        </button>
     </div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
