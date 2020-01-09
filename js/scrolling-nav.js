@@ -43,8 +43,9 @@
             .data(root.descendants().slice(1))
             .join("path")
             .attr("fill", d => {
-                while (d.depth > 1)
-                { d = d.parent; }
+                while (d.depth > 1) {
+                    d = d.parent;
+                }
                 return color(d.data.name);
             })
             .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
@@ -94,16 +95,8 @@
 
                 newDiv.removeChild(c1);
                 div2.appendChild(c1)
-            })
-            .on("touchstart", function handleStart(evt) {
-                evt.preventDefault();
-                console.log("touchstart.");
-                var touches = evt.changedTouches;
-
-                for (var i = 0; i < touches.length; i++) {
-                    console.log("touchstart:" + i + "...");
-                }
             });
+
         function clicked(p) {
             parent.datum(p.parent || root);
 
@@ -176,14 +169,12 @@
                 return cleanObject;
             }
         }
+
         function dblclick(a) {
             var produkt = a.data.name;
-            if (produkt == "Obst") {
+            if (produkt == "Obst2") {
                 clicked(a)
-            }else if(produkt == "Obst2") {
-                clicked(a)
-            }
-            else {
+            } else {
                 window.open("produkt.php?name=" + a.data.name, '_system')
             }
         }

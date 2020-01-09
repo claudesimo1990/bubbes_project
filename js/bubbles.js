@@ -119,12 +119,12 @@
                 if (!tapped) { //if tap is not set, set up single tap
                     tapped = setTimeout(function () {
                         tapped = null
-                        alert("hallo")
+                       clicked(e)
                     }, 300);
                 } else {
                     clearTimeout(tapped);
                     tapped = null
-                    alert("hallo")
+                    clicked(e)
                 }
             })
 
