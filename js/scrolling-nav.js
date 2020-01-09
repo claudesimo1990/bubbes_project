@@ -53,8 +53,39 @@
 
         path.filter(d => d.children)
             .style("cursor", "pointer")
-            .on("dblclick", dblclick)
             .on("click", clicked);
+
+        path.filter(d => d.children)
+            .style("cursor", "pointer")
+            .on("dblclick", dblclick);
+
+        var tapped = false
+        path.filter(d => d.children)
+            .on("touchstart", function (a) {
+                if (!tapped) { //if tap is not set, set up single tap
+                    tapped = setTimeout(function () {
+                        tapped = null
+                        var produkt = a.data.name;
+                        if (produkt == "Obst") {
+                            clicked(a)
+                        }
+                        else {
+                            window.open("produkt.php?name=" + a.data.name, '_system')
+                        }
+                    }, 300);
+                } else {
+                    clearTimeout(tapped);
+                    tapped = null;
+                    var produkt = a.data.name;
+                    if (produkt == "Obst") {
+                        clicked(a)
+                    }
+                    else {
+                        window.open("produkt.php?name=" + a.data.name, '_system')
+                    }
+                }
+                e.preventDefault()
+            });
 
         path.append("title")
             .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
