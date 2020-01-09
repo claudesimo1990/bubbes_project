@@ -62,7 +62,7 @@
 
         var tapped = false
         path.filter(d => d.children)
-            .on("touchstart", function (e) {
+            .on("touchstart", function (a) {
                 if (!tapped) { //if tap is not set, set up single tap
                     tapped = setTimeout(function () {
                         tapped = null
@@ -76,7 +76,7 @@
                     }, 300);
                 } else {
                     clearTimeout(tapped);
-                    tapped = null
+                    tapped = null;
                     var produkt = a.data.name;
                     if (produkt == "Obst") {
                         clicked(a)
