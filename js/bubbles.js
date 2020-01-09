@@ -67,7 +67,8 @@
                     tapped = setTimeout(function () {
                         tapped = null
                         var produkt = a.data.name;
-                        if (produkt == "Obst") {
+                        if (produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+                            produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
                             clicked(a)
                         } else {
                             window.open("produkt.php?name=" + a.data.name, '_system')
