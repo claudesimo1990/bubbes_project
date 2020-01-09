@@ -119,48 +119,14 @@
                 if (!tapped) { //if tap is not set, set up single tap
                     tapped = setTimeout(function () {
                         tapped = null
-                        clicked();
+                        alert("hallo")
                     }, 300);
                 } else {
                     clearTimeout(tapped);
                     tapped = null
-                    clicked();
+                    alert("hallo")
                 }
-                e.preventDefault()
             })
-            .on("touchstart", function (e) {
-                if (!tapped) {
-                    tapped = setTimeout(function () {
-                        tapped = null;
-                        let top = document.getElementById("chart2");
-                        let top2 = document.getElementById("chart");
-
-                        let nested = document.getElementById("partition2SVG");
-                        let nested2 = document.getElementById("partitionSVG");
-                        // Throws Uncaught TypeError
-                        top.removeChild(nested2);
-                        top.appendChild(nested);
-
-                        top2.appendChild(nested2);
-                        top2.removeChild(nested);
-                    }, 300);
-                } else {
-                    clearTimeout(tapped);
-                    tapped = null
-                    let top = document.getElementById("chart2");
-                    let top2 = document.getElementById("chart");
-
-                    let nested = document.getElementById("partition2SVG");
-                    let nested2 = document.getElementById("partitionSVG");
-                    // Throws Uncaught TypeError
-                    top.removeChild(nested2);
-                    top.appendChild(nested);
-
-                    top2.appendChild(nested2);
-                    top2.removeChild(nested);
-                }
-                e.preventDefault()
-            });
 
 
         function clicked(p) {
@@ -235,33 +201,6 @@
                 return cleanObject;
             }
         }
-        function doSwap(a, b) {
-            swapElements(document.getElementById(a), document.getElementById(b));
-        }
-
-        function swapElements(obj1, obj2) {
-            // save the location of obj2
-            var parent2 = obj2.parentNode;
-            var next2 = obj2.nextSibling;
-            // special case for obj1 is the next sibling of obj2
-            if (next2 === obj1) {
-                // just put obj1 before obj2
-                parent2.insertBefore(obj1, obj2);
-            } else {
-                // insert obj2 right before obj1
-                obj1.parentNode.insertBefore(obj2, obj1);
-
-                // now insert obj1 where obj2 was
-                if (next2) {
-                    // if there was an element after obj2, then insert obj1 right before that
-                    parent2.insertBefore(obj1, next2);
-                } else {
-                    // otherwise, just append as last child
-                    parent2.appendChild(obj1);
-                }
-            }
-        }
-
         function dblclick(a) {
             var produkt = a.data.name;
             if (produkt == "Obst") {

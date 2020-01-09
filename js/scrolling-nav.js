@@ -35,7 +35,6 @@
             .style("width", "100%")
             .style("height", "auto")
             .style("font", "10px sans-serif");
-
         const g = svg.append("g")
             .attr("transform", `translate(${width / 2},${width / 2})`);
 
@@ -78,51 +77,32 @@
             .attr("fill", "none")
             .attr("pointer-events", "all")
             .on("click", function (a) {
-                let top = document.getElementById("chart");
-                let top2 = document.getElementById("chart2");
+                clicked(a);
+                let div2 = document.getElementById("chart2");
+                let div1 = document.getElementById("chart");
 
-                let nested = document.getElementById("partitionSVG");
-                let nested2 = document.getElementById("partition2SVG");
+                let c2 = document.getElementById("partition2SVG");
+                let c1 = document.getElementById("partitionSVG");
                 // Throws Uncaught TypeError
-                top.removeChild(nested);
-                top.appendChild(nested2);
+                var newDiv = document.createElement("div");
 
-                top2.appendChild(nested);
-                top2.removeChild(nested2);
+                div1.removeChild(c1);
+                newDiv.appendChild(c1);
+
+                div2.removeChild(c2);
+                div1.appendChild(c2);
+
+                newDiv.removeChild(c1);
+                div2.appendChild(c1)
             })
-            .on("touchstart", function (e) {
-                if (!tapped) { //if tap is not set, set up single tap
-                    tapped = setTimeout(function () {
-                        tapped = null;
-                        let top = document.getElementById("chart");
-                        let top2 = document.getElementById("chart2");
+            .on("touchstart", function handleStart(evt) {
+                evt.preventDefault();
+                console.log("touchstart.");
+                var touches = evt.changedTouches;
 
-                        let nested = document.getElementById("partitionSVG");
-                        let nested2 = document.getElementById("partition2SVG");
-                        // Throws Uncaught TypeError
-                        top.removeChild(nested);
-                        top.appendChild(nested2);
-
-                        top2.appendChild(nested);
-                        top2.removeChild(nested2);
-                        clicked();
-                    }, 300);
-                } else {
-                    clearTimeout(tapped);
-                    tapped = null
-                    let top = document.getElementById("chart");
-                    let top2 = document.getElementById("chart2");
-
-                    let nested = document.getElementById("partitionSVG");
-                    let nested2 = document.getElementById("partition2SVG");
-                    // Throws Uncaught TypeError
-                    top.removeChild(nested);
-                    top.appendChild(nested2);
-
-                    top2.appendChild(nested);
-                    top2.removeChild(nested2);
+                for (var i = 0; i < touches.length; i++) {
+                    console.log("touchstart:" + i + "...");
                 }
-                e.preventDefault()
             });
         function clicked(p) {
             parent.datum(p.parent || root);
@@ -170,43 +150,7 @@
             const y = (d.y0 + d.y1) / 2 * radius;
             return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
         }
-        function post_to_url(path, params, method) {
-            method = method || "post"; // Set method to post by default, if not specified.
 
-            // The rest of this code assumes you are not using a library.
-            // It can be made less wordy if you use one.
-            var form = document.createElement("form");
-            form.setAttribute("method", method);
-            form.setAttribute("action", path);
-
-            var addField = function( key, value ){
-                var hiddenField = document.createElement("input");
-                hiddenField.setAttribute("type", "hidden");
-                hiddenField.setAttribute("name", key);
-                hiddenField.setAttribute("value", value );
-
-                form.appendChild(hiddenField);
-            };
-
-            for(var key in params) {
-                if(params.hasOwnProperty(key)) {
-                    if( params[key] instanceof Array ){
-                        for(var i = 0; i < params[key].length; i++){
-                            addField( key, params[key][i] )
-                        }
-                    }
-                    else{
-                        addField( key, params[key] );
-                    }
-                }
-            }
-
-            document.body.appendChild(form);
-            form.submit();
-        }
-        function touchclick(p) {
-            clicked(p)
-        }
         function cleanStringify(object) {
             if (object && typeof object === 'object') {
                 object = copyWithoutCircularReferences([object], object);
@@ -215,7 +159,7 @@
 
             function copyWithoutCircularReferences(references, object) {
                 var cleanObject = {};
-                Object.keys(object).forEach(function(key) {
+                Object.keys(object).forEach(function (key) {
                     var value = object[key];
                     if (value && typeof value === 'object') {
                         if (references.indexOf(value) < 0) {
@@ -234,7 +178,9 @@
         }
         function dblclick(a) {
             var produkt = a.data.name;
-           if(produkt == "Obst2") {
+            if (produkt == "Obst") {
+                clicked(a)
+            }else if(produkt == "Obst2") {
                 clicked(a)
             }
             else {
