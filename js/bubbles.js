@@ -69,8 +69,7 @@
                         var produkt = a.data.name;
                         if (produkt == "Obst") {
                             clicked(a)
-                        }
-                        else {
+                        } else {
                             window.open("produkt.php?name=" + a.data.name, '_system')
                         }
                     }, 300);
@@ -78,10 +77,10 @@
                     clearTimeout(tapped);
                     tapped = null;
                     var produkt = a.data.name;
-                    if (produkt == "Obst") {
+                    if (produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+                        produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
                         clicked(a)
-                    }
-                    else {
+                    } else {
                         window.open("produkt.php?name=" + a.data.name, '_system')
                     }
                 }
@@ -126,7 +125,7 @@
                 if (!tapped) { //if tap is not set, set up single tap
                     tapped = setTimeout(function () {
                         tapped = null
-                       clicked(e)
+                        clicked(e)
                     }, 300);
                 } else {
                     clearTimeout(tapped);
@@ -208,12 +207,13 @@
                 return cleanObject;
             }
         }
+
         function dblclick(a) {
             var produkt = a.data.name;
-            if (produkt == "Obst") {
+            if (produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+                produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
                 clicked(a)
-            }
-        else {
+            } else {
                 window.open("produkt.php?name=" + a.data.name, '_system')
             }
         }

@@ -77,7 +77,8 @@
                     clearTimeout(tapped);
                     tapped = null;
                     var produkt = a.data.name;
-                    if (produkt == "Obst") {
+                    if (produkt == "Obst2" || produkt == "Gemüse2" || produkt == "Tiefkühl2" ||
+                        produkt == "Getränke2" || produkt == "Milchprodukte2" || produkt == "Süßwaren2") {
                         clicked(a)
                     }
                     else {
@@ -203,7 +204,8 @@
 
         function dblclick(a) {
             var produkt = a.data.name;
-            if (produkt == "Obst2") {
+            if (produkt == "Obst2" || produkt == "Gemüse2" || produkt == "Tiefkühl2" ||
+                produkt == "Getränke2" || produkt == "Milchprodukte2" || produkt == "Süßwaren2") {
                 clicked(a)
             } else {
                 window.open("produkt.php?name=" + a.data.name, '_system')
