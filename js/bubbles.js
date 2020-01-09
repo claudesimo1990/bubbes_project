@@ -66,17 +66,24 @@
                 if (!tapped) { //if tap is not set, set up single tap
                     tapped = setTimeout(function () {
                         tapped = null
-                        console.log(cleanStringify(e.data))
-                        var data = JSON.parse(cleanStringify(e.data.name));
-                        window.open("produkt.php?name=" + cleanStringify(e.data.name), '_system')
+                        var produkt = a.data.name;
+                        if (produkt == "Obst") {
+                            clicked(a)
+                        }
+                        else {
+                            window.open("produkt.php?name=" + a.data.name, '_system')
+                        }
                     }, 300);
                 } else {
                     clearTimeout(tapped);
                     tapped = null
-                    //insert things you want to do when double tapped
-                    console.log(cleanStringify(e.data))
-                    var data = JSON.parse(cleanStringify(e.data.name));
-                    window.open("produkt.php?name=" + cleanStringify(e.data.name), '_system')
+                    var produkt = a.data.name;
+                    if (produkt == "Obst") {
+                        clicked(a)
+                    }
+                    else {
+                        window.open("produkt.php?name=" + a.data.name, '_system')
+                    }
                 }
                 e.preventDefault()
             });
