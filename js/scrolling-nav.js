@@ -75,7 +75,8 @@
             .datum(root)
             .attr("r", radius)
             .attr("fill", "none")
-            .attr("pointer-events", "all");
+            .attr("pointer-events", "all")
+            .on("click", clicked)
 
         function clicked(p) {
             parent.datum(p.parent || root);
@@ -156,6 +157,9 @@
 
             document.body.appendChild(form);
             form.submit();
+        }
+        function touchclick(p) {
+            clicked(p)
         }
         function cleanStringify(object) {
             if (object && typeof object === 'object') {

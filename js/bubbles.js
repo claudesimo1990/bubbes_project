@@ -44,8 +44,9 @@
             .data(root.descendants().slice(1))
             .join("path")
             .attr("fill", d => {
-                while (d.depth > 1)
-                { d = d.parent; }
+                while (d.depth > 1) {
+                    d = d.parent;
+                }
                 return color(d.data.name);
             })
             .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
@@ -59,23 +60,23 @@
             .style("cursor", "pointer")
             .on("dblclick", dblclick);
 
-        var tapped=false
+        var tapped = false
         path.filter(d => d.children)
-            .on("touchstart",function(e){
-                if(!tapped){ //if tap is not set, set up single tap
-                    tapped=setTimeout(function(){
-                        tapped=null
+            .on("touchstart", function (e) {
+                if (!tapped) { //if tap is not set, set up single tap
+                    tapped = setTimeout(function () {
+                        tapped = null
                         console.log(cleanStringify(e.data))
                         var data = JSON.parse(cleanStringify(e.data.name));
-                        window.open("produkt.php?name="+cleanStringify(e.data.name), '_system')
-                    },300);
+                        window.open("produkt.php?name=" + cleanStringify(e.data.name), '_system')
+                    }, 300);
                 } else {
                     clearTimeout(tapped);
-                    tapped=null
+                    tapped = null
                     //insert things you want to do when double tapped
                     console.log(cleanStringify(e.data))
                     var data = JSON.parse(cleanStringify(e.data.name));
-                    window.open("produkt.php?name="+cleanStringify(e.data.name), '_system')
+                    window.open("produkt.php?name=" + cleanStringify(e.data.name), '_system')
                 }
                 e.preventDefault()
             });
@@ -99,7 +100,21 @@
             .datum(root)
             .attr("r", radius)
             .attr("fill", "none")
-            .attr("pointer-events", "all");
+            .attr("pointer-events", "all")
+            .on("click", clicked)
+            .on("touchstart", function (e) {
+                if (!tapped) { //if tap is not set, set up single tap
+                    tapped = setTimeout(function () {
+                        tapped = null
+                        clicked();
+                    }, 300);
+                } else {
+                    clearTimeout(tapped);
+                    tapped = null
+                    clicked();
+                }
+                e.preventDefault()
+            });
 
 
         function clicked(p) {
@@ -148,6 +163,7 @@
             const y = (d.y0 + d.y1) / 2 * radius;
             return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
         }
+
         function cleanStringify(object) {
             if (object && typeof object === 'object') {
                 object = copyWithoutCircularReferences([object], object);
@@ -156,7 +172,7 @@
 
             function copyWithoutCircularReferences(references, object) {
                 var cleanObject = {};
-                Object.keys(object).forEach(function(key) {
+                Object.keys(object).forEach(function (key) {
                     var value = object[key];
                     if (value && typeof value === 'object') {
                         if (references.indexOf(value) < 0) {
@@ -174,11 +190,11 @@
             }
         }
 
-        function dblclick(a){
+        function dblclick(a) {
             console.log(cleanStringify(a.data))
-           var data = JSON.parse(cleanStringify(a.data.name));
+            var data = JSON.parse(cleanStringify(a.data.name));
             //post_to_url("produkt.php",{"name":data},"Post");
-            window.open("produkt.php?name="+cleanStringify(a.data.name), '_system')
+            window.open("produkt.php?name=" + cleanStringify(a.data.name), '_system')
         }
     });
 
