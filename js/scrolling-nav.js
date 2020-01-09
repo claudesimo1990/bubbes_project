@@ -110,7 +110,17 @@
                 } else {
                     clearTimeout(tapped);
                     tapped = null
-                    clicked();
+                    let top = document.getElementById("chart");
+                    let top2 = document.getElementById("chart2");
+
+                    let nested = document.getElementById("partitionSVG");
+                    let nested2 = document.getElementById("partition2SVG");
+                    // Throws Uncaught TypeError
+                    top.removeChild(nested);
+                    top.appendChild(nested2);
+
+                    top2.appendChild(nested);
+                    top2.removeChild(nested2);
                 }
                 e.preventDefault()
             });
@@ -224,7 +234,7 @@
         }
         function dblclick(a) {
             var produkt = a.data.name;
-            if (produkt == "Obst2") {
+           if(produkt == "Obst2") {
                 clicked(a)
             }
             else {
