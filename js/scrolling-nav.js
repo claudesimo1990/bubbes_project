@@ -71,13 +71,49 @@
             .attr("transform", d => labelTransform(d.current))
             .text(d => d.data.name);
 
+        var tapped = false
         const parent = g.append("circle")
             .datum(root)
             .attr("r", radius)
             .attr("fill", "none")
             .attr("pointer-events", "all")
-            .on("click", clicked)
+            .on("click", function (a) {
+                let top = document.getElementById("chart");
+                let top2 = document.getElementById("chart2");
 
+                let nested = document.getElementById("partitionSVG");
+                let nested2 = document.getElementById("partition2SVG");
+                // Throws Uncaught TypeError
+                top.removeChild(nested);
+                top.appendChild(nested2);
+
+                top2.appendChild(nested);
+                top2.removeChild(nested2);
+            })
+            .on("touchstart", function (e) {
+                if (!tapped) { //if tap is not set, set up single tap
+                    tapped = setTimeout(function () {
+                        tapped = null;
+                        let top = document.getElementById("chart");
+                        let top2 = document.getElementById("chart2");
+
+                        let nested = document.getElementById("partitionSVG");
+                        let nested2 = document.getElementById("partition2SVG");
+                        // Throws Uncaught TypeError
+                        top.removeChild(nested);
+                        top.appendChild(nested2);
+
+                        top2.appendChild(nested);
+                        top2.removeChild(nested2);
+                        clicked();
+                    }, 300);
+                } else {
+                    clearTimeout(tapped);
+                    tapped = null
+                    clicked();
+                }
+                e.preventDefault()
+            });
         function clicked(p) {
             parent.datum(p.parent || root);
 
@@ -186,10 +222,14 @@
                 return cleanObject;
             }
         }
-        function dblclick(a){
-            console.log(cleanStringify(a.data))
-            var data = JSON.parse(cleanStringify(a.data.name));
-            window.open("produkt.php?name="+cleanStringify(a.data.name), '_system')
+        function dblclick(a) {
+            var produkt = a.data.name;
+            if (produkt == "Obst2") {
+                clicked(a)
+            }
+            else {
+                window.open("produkt.php?name=" + a.data.name, '_system')
+            }
         }
     });
 
