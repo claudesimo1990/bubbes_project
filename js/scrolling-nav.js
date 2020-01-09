@@ -66,10 +66,10 @@
                     tapped = setTimeout(function () {
                         tapped = null
                         var produkt = a.data.name;
-                        if (produkt == "Obst") {
+                        if (produkt == "Obst2" || produkt == "Gemüse2" || produkt == "Tiefkühl2" ||
+                            produkt == "Getränke2" || produkt == "Milchprodukte2" || produkt == "Süßwaren2") {
                             clicked(a)
-                        }
-                        else {
+                        } else {
                             window.open("produkt.php?name=" + a.data.name, '_system')
                         }
                     }, 300);
@@ -80,8 +80,7 @@
                     if (produkt == "Obst2" || produkt == "Gemüse2" || produkt == "Tiefkühl2" ||
                         produkt == "Getränke2" || produkt == "Milchprodukte2" || produkt == "Süßwaren2") {
                         clicked(a)
-                    }
-                    else {
+                    } else {
                         window.open("produkt.php?name=" + a.data.name, '_system')
                     }
                 }
