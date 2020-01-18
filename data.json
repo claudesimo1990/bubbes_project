@@ -2,32 +2,23 @@
   "name": "Produktkategorie",
   "children": [
     {
-      "name": "Süßwaren",
+      "name": "A-produkt",
       "children": [
-        {
-          "name": "Haribo",
+
+        {"name": "B",
           "children": [
-            {"name": "Primary", "size": 1},
-            {"name": "Secondary", "size": 1}
+            {"name": "", "size": 1}
           ]
         },
-        {
-          "name": "Schokolade",
+        {"name": "A",
           "children": [
-            {"name": "CentralService", "size": 1},
-            {"name": "App01", "size": 1},
-            {"name": "App02", "size": 1},
-            {"name": "ShortestPaths", "size": 1},
-            {"name": "SpanningTree", "size": 1}
+            {"name": "Primary", "size": 1}
           ]
         },
-        {
-          "name": "Kekse",
-          "children": [
-            {"name": "CS", "size": 1},
-            {"name": "Java01", "size": 1}
-          ]
-        }
+        {"name": "C", "size": 2},
+        {"name": "D", "size": 2},
+        {"name": "E", "size": 2},
+        {"name": "F", "size": 2}
       ]
     },
     {
@@ -144,30 +135,27 @@
       ]
     },
     {
-      "name": "Gemüse",
+      "name": "Obst",
       "children": [
         {
-          "name": "Tomaten",
+          "name": "Apfel",
           "children": [
-            {"name": "Papaya", "size": 1},
-            {"name": "Trauben", "size": 1}
+            {"name": "Primary", "size": 2},
+            {"name": "Secondary", "size": 2}
           ]
         },
         {
-          "name": "Gurken",
+          "name": "Banane",
           "children": [
-            {"name": "CentralService", "size": 1},
-            {"name": "App01", "size": 1},
-            {"name": "App02", "size": 1},
-            {"name": "ShortestPaths", "size": 1},
-            {"name": "SpanningTree", "size": 1}
+            {"name": "Cola", "size": 2},
+            {"name": "Wasser", "size": 2}
           ]
         },
         {
-          "name": "Paprika",
+          "name": "Orangen",
           "children": [
-            {"name": "Brocoli", "size": 1},
-            {"name": "Auberginen", "size": 1}
+            {"name": "Fleisch", "size": 2},
+            {"name": "Fisch", "size": 2}
           ]
         }
       ]

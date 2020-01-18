@@ -31,8 +31,8 @@
 
         root.each(d => d.current = d);
 
-        const svg = d3.select('#partition2SVG')
-            .style("width", "100%")
+        const svg = d3.select('#circle-2')
+            .style("width", "80%")
             .style("height", "auto")
             .style("font", "10px sans-serif");
         const g = svg.append("g")

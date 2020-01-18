@@ -31,8 +31,8 @@
 
         root.each(d => d.current = d);
 
-        const svg = d3.select('#partitionSVG')
-            .style("width", "90%")
+        const svg = d3.select('#circle-3')
+            .style("width", "80%")
             .style("height", "auto")
             .style("font", "10px sans-serif");
 
@@ -62,12 +62,13 @@
 
         var tapped = false
         path.filter(d => d.children)
+
             .on("touchstart", function (a) {
                 if (!tapped) { //if tap is not set, set up single tap
                     tapped = setTimeout(function () {
                         tapped = null
                         var produkt = a.data.name;
-                        if (produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+                        if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
                             produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
                             clicked(a)
                         } else {
@@ -78,7 +79,7 @@
                     clearTimeout(tapped);
                     tapped = null;
                     var produkt = a.data.name;
-                    if (produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+                    if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
                         produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
                         clicked(a)
                     } else {
@@ -137,36 +138,50 @@
 
 
         function clicked(p) {
-            parent.datum(p.parent || root);
+            console.log(p.data.name);
 
-            root.each(d => d.target = {
-                x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-                x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-                y0: Math.max(0, d.y0 - p.depth),
-                y1: Math.max(0, d.y1 - p.depth)
-            });
+            var produkt = p.data.name;
+            if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+                produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
 
-            const t = g.transition().duration(750);
+                parent.datum(p.parent || root);
 
-            // Transition the data on all arcs, even the ones that aren’t visible,
-            // so that if this transition is interrupted, entering arcs will start
-            // the next transition from the desired position.
-            path.transition(t)
-                .tween("data", d => {
-                    const i = d3.interpolate(d.current, d.target);
-                    return t => d.current = i(t);
-                })
-                .filter(function (d) {
-                    return +this.getAttribute("fill-opacity") || arcVisible(d.target);
-                })
-                .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
-                .attrTween("d", d => () => arc(d.current));
+                root.each(d => d.target = {
+                    x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+                    x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+                    y0: Math.max(0, d.y0 - p.depth),
+                    y1: Math.max(0, d.y1 - p.depth)
+                });
 
-            label.filter(function (d) {
-                return +this.getAttribute("fill-opacity") || labelVisible(d.target);
-            }).transition(t)
-                .attr("fill-opacity", d => +labelVisible(d.target))
-                .attrTween("transform", d => () => labelTransform(d.current));
+                const t = g.transition().duration(750);
+
+                // Transition the data on all arcs, even the ones that aren’t visible,
+                // so that if this transition is interrupted, entering arcs will start
+                // the next transition from the desired position.
+                path.transition(t)
+                    .tween("data", d => {
+                        const i = d3.interpolate(d.current, d.target);
+
+                        console.log(d);
+                        //console.log(d.target);
+                        return t => d.current = i(t);
+                    })
+                    .filter(function (d) {
+                        return +this.getAttribute("fill-opacity") || arcVisible(d.target);
+                    })
+                    .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
+                    .attr("fill-opacity", d => arcVisible(d.target) ? ((d.height == 0 && d.depth == 3 && (d.data.name=="")) ? 0.0 : 0.6) : 0)
+                    .attrTween("d", d => () => arc(d.current));
+
+                label.filter(function (d) {
+                    return +this.getAttribute("fill-opacity") || labelVisible(d.target);
+                }).transition(t)
+                    .attr("fill-opacity", d => +labelVisible(d.target))
+                    .attrTween("transform", d => () => labelTransform(d.current));
+            } else {
+                window.open("produkt.php?name=" + p.data.name, '_system')
+            }
+
         }
 
         function arcVisible(d) {
@@ -211,7 +226,7 @@
 
         function dblclick(a) {
             var produkt = a.data.name;
-            if (produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
+            if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
                 produkt == "Getränke" || produkt == "Milchprodukte" || produkt == "Süßwaren") {
                 clicked(a)
             } else {
