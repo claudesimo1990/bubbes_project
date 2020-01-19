@@ -1,0 +1,164 @@
+{
+  "name": "Produktkategorie",
+  "children": [
+    {
+      "name": "Circle-3",
+      "children": [
+
+        {"name": "B",
+          "children": [
+            {"name": "", "size": 1}
+          ]
+        },
+        {"name": "A",
+          "children": [
+            {"name": "Primary", "size": 1}
+          ]
+        },
+        {"name": "C", "size": 2},
+        {"name": "D", "size": 2},
+        {"name": "E", "size": 2},
+        {"name": "F", "size": 2}
+      ]
+    },
+    {
+      "name": "Milchprodukte",
+      "children": [
+        {
+          "name": "Käse",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Butter",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Milch",
+          "children": [
+            {"name": "milch1", "size": 1},
+            {"name": "milch2", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Getränke",
+      "children": [
+        {
+          "name": "Bier",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Wein",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Fanta",
+          "children": [
+            {"name": "CS", "size": 1},
+            {"name": "Java01", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tiefkühl",
+      "children": [
+        {
+          "name": "Pizza",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Obst",
+          "children": [
+            {"name": "CentralService", "size": 1},
+            {"name": "App01", "size": 1},
+            {"name": "App02", "size": 1},
+            {"name": "ShortestPaths", "size": 1},
+            {"name": "SpanningTree", "size": 1}
+          ]
+        },
+        {
+          "name": "Gemüse",
+          "children": [
+            {"name": "CS", "size": 1},
+            {"name": "Java01", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Obst",
+      "children": [
+        {
+          "name": "Apfel",
+          "children": [
+            {"name": "Primary", "size": 1},
+            {"name": "Secondary", "size": 1}
+          ]
+        },
+        {
+          "name": "Banane",
+          "children": [
+            {"name": "Cola", "size": 1},
+            {"name": "Wasser", "size": 1}
+          ]
+        },
+        {
+          "name": "Orangen",
+          "children": [
+            {"name": "Fleisch", "size": 1},
+            {"name": "Fisch", "size": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Obst",
+      "children": [
+        {
+          "name": "Apfel",
+          "children": [
+            {"name": "Primary", "size": 2},
+            {"name": "Secondary", "size": 2}
+          ]
+        },
+        {
+          "name": "Banane",
+          "children": [
+            {"name": "Cola", "size": 2},
+            {"name": "Wasser", "size": 2}
+          ]
+        },
+        {
+          "name": "Orangen",
+          "children": [
+            {"name": "Fleisch", "size": 2},
+            {"name": "Fisch", "size": 2}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -24,7 +24,7 @@
 
     const {require} = new observablehq.Library;
 
-    d3.json("data.json").then(data => {
+    d3.json("circle-3.json").then(data => {
         console.log(data);
         const root = partition(data);
         const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -34,6 +34,7 @@
         const svg = d3.select('#circle-3')
             .style("width", "80%")
             .style("height", "auto")
+            .style("z-index", "2")
             .style("font", "10px sans-serif");
 
         const g = svg.append("g")
@@ -111,17 +112,7 @@
             .attr("pointer-events", "all")
             .on("click", function (a) {
                 clicked(a);
-                let top = document.getElementById("chart2");
-                let top2 = document.getElementById("chart");
-
-                let nested = document.getElementById("partition2SVG");
-                let nested2 = document.getElementById("partitionSVG");
-                // Throws Uncaught TypeError
-                top.removeChild(nested2);
-                top.appendChild(nested);
-
-                top2.appendChild(nested2);
-                top2.removeChild(nested);
+                swapElements(document.getElementById("circle-3"),document.getElementById("circle-4"));
             })
             .on("touchstart", function (e) {
                 if (!tapped) { //if tap is not set, set up single tap
@@ -224,6 +215,28 @@
             }
         }
 
+        function swapElements(obj1, obj2) {
+            // save the location of obj2
+            var parent2 = obj2.parentNode;
+            var next2 = obj2.nextSibling;
+            // special case for obj1 is the next sibling of obj2
+            if (next2 === obj1) {
+                // just put obj1 before obj2
+                parent2.insertBefore(obj1, obj2);
+            } else {
+                // insert obj2 right before obj1
+                obj1.parentNode.insertBefore(obj2, obj1);
+
+                // now insert obj1 where obj2 was
+                if (next2) {
+                    // if there was an element after obj2, then insert obj1 right before that
+                    parent2.insertBefore(obj1, next2);
+                } else {
+                    // otherwise, just append as last child
+                    parent2.appendChild(obj1);
+                }
+            }
+        }
         function dblclick(a) {
             var produkt = a.data.name;
             if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||

@@ -15,7 +15,7 @@
 <style>
     .right{
         position: absolute;
-        top: 0;
+        top: 10%;
         right: 0;
         width: 40%;
         height: 100%;
@@ -37,7 +37,7 @@
     }
     .left{
         position: absolute;
-        top: 0;
+        top: 10%;
         left: 0;
         width: 40%;
         height: 100%;
@@ -69,28 +69,43 @@
         margin: 0;
         z-index: 2;
     }
+    .sitelogo{
+        position: fixed;
+        padding: 8px 40px;
+        background-color: #999999;
+        font-size: 30px;
+        width: 100%;
+        height: 60px;
+    }
 </style>
 
 <body class="d-flex flex-column">
 
 <div id="page-content">
+
+    <div class="sitelogo  mb-30">
+        <a href="index.html">
+            BU<span style="color:#007bff">BB</span>LES
+        </a>
+    </div>
+
     <div class="left text-center">
-        <div class="left-top text-center">
-            <svg id="circle-1" viewBox="0 0 932 932"></svg>
+        <div class="left-top text-center" id="cir-1">
+            <svg id="circle-1" viewBox="0 0 1000 1000"></svg>
         </div>
-        <div class="left-bottom text-center">
-            <svg id="circle-2" viewBox="0 0 932 932"></svg>
+        <div class="left-bottom text-center" id="cir-2">
+            <svg id="circle-2" viewBox="0 0 1000 1000"></svg>
         </div>
     </div>
-    <div class="middle text-center">
+    <div class="middle text-center" id="middle">
         <svg id="circle-4" viewBox="0 0 932 932"></svg>
     </div>
     <div class="right text-center">
-        <div class="right-top text-center">
-            <svg id="circle-3" viewBox="0 0 932 932"></svg>
+        <div class="right-top text-center" id="cir-4">
+            <svg id="circle-3" viewBox="0 0 1000 1000"></svg>
         </div>
-        <div class="right-bottom text-center">
-            <svg id="circle-5" viewBox="0 0 932 932"></svg>
+        <div class="right-bottom text-center" id="cir-5">
+            <svg id="circle-5" viewBox="0 0 1000 1000"></svg>
         </div>
     </div>
 </div>
@@ -158,33 +173,5 @@
 <script src="js/circle-3.js"></script>
 <script src="js/circle-4.js"></script>
 <script src="js/circle-5.js"></script>
-<script type="text/javascript">
-    function doSwap(a, b) {
-        swapElements(document.getElementById(a), document.getElementById(b));
-    }
-
-    function swapElements(obj1, obj2) {
-        // save the location of obj2
-        var parent2 = obj2.parentNode;
-        var next2 = obj2.nextSibling;
-        // special case for obj1 is the next sibling of obj2
-        if (next2 === obj1) {
-            // just put obj1 before obj2
-            parent2.insertBefore(obj1, obj2);
-        } else {
-            // insert obj2 right before obj1
-            obj1.parentNode.insertBefore(obj2, obj1);
-
-            // now insert obj1 where obj2 was
-            if (next2) {
-                // if there was an element after obj2, then insert obj1 right before that
-                parent2.insertBefore(obj1, next2);
-            } else {
-                // otherwise, just append as last child
-                parent2.appendChild(obj1);
-            }
-        }
-    }
-</script>
 </body>
 </html>

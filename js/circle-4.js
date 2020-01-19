@@ -24,7 +24,7 @@
 
     const {require} = new observablehq.Library;
 
-    d3.json("data.json").then(data => {
+    d3.json("circle-4.json").then(data => {
         console.log(data);
         const root = partition(data);
         const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -112,17 +112,6 @@
             .attr("pointer-events", "all")
             .on("click", function (a) {
                 clicked(a);
-                let top = document.getElementById("chart2");
-                let top2 = document.getElementById("chart");
-
-                let nested = document.getElementById("partition2SVG");
-                let nested2 = document.getElementById("partitionSVG");
-                // Throws Uncaught TypeError
-                top.removeChild(nested2);
-                top.appendChild(nested);
-
-                top2.appendChild(nested2);
-                top2.removeChild(nested);
             })
             .on("touchstart", function (e) {
                 if (!tapped) { //if tap is not set, set up single tap
@@ -139,7 +128,7 @@
 
 
         function clicked(p) {
-            console.log(p.data.name);
+            //console.log(p.data.name);
 
             var produkt = p.data.name;
             if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||
