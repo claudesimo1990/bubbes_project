@@ -55,7 +55,8 @@
 
         path.filter(d => d.children)
             .style("cursor", "pointer")
-            .on("click", clicked);
+            .on("click", clicked)
+            .on("click", dblclick);
 
         path.filter(d => d.children)
             .style("cursor", "pointer")
@@ -128,7 +129,7 @@
 
 
         function clicked(p) {
-            //console.log(p.data.name);
+            console.log(p.data.name);
 
             var produkt = p.data.name;
             if (produkt == "Produktkategorie" || produkt == "A-produkt" || produkt == "B-produkt" || produkt == "Obst" || produkt == "Gemüse" || produkt == "Tiefkühl" ||

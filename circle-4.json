@@ -114,7 +114,11 @@
         {
           "name": "Apfel",
           "children": [
-            {"name": "Primary", "size": 1},
+            {"name": "Primary",
+              "children":
+              [
+              {"name": "top", "size": 1}
+            ]},
             {"name": "Secondary", "size": 1}
           ]
         },
@@ -154,8 +158,18 @@
         {
           "name": "Orangen",
           "children": [
-            {"name": "Fleisch", "size": 2},
-            {"name": "Fisch", "size": 2}
+            {"name": "Fleisch",
+              "children": [
+                {"name": "", "size": 2},
+                {"name": "", "size": 2}
+              ]
+            },
+            {"name": "Fisch",
+              "children": [
+                {"name": "", "size": 2},
+                {"name": "", "size": 2}
+              ]
+            }
           ]
         }
       ]
